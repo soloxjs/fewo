@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferienwohnung am Bächle in Sonthofen</title>
     
+    <meta name="description" content="Gemütliche 69qm Ferienwohnung in Sonthofen mit Bergblick, Süd-Balkon, 2 Schlafzimmern. Ruhige Lage am Bächle, ideal für Wander- und Radtouren.">
+    <meta name="keywords" content="Ferienwohnung Sonthofen, Ferienwohnung Allgäu, FeWo Sonthofen, Ferienwohnung am Bächle, Bergblick, Wandern Allgäu, 2 Schlafzimmer">
+    <link rel="canonical" href="https://www.ferienwohnung-am-bächle.de/index.html">
+    <meta property="og:title" content="Ferienwohnung am Bächle in Sonthofen">
+    <meta property="og:description" content="Gemütliche 69qm Ferienwohnung in Sonthofen mit Bergblick, Süd-Balkon und 2 Schlafzimmern.">
+    <meta property="og:image" content="https://www.ferienwohnung-am-bächle.de/pic01.jpg"> <meta property="og:url" content="https://www.ferienwohnung-am-bächle.de.de/index.html">
+    <meta property="og:type" content="website">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
@@ -87,7 +95,7 @@
         }
 
 
-        /* === GEÄNDERT: Vollbild-Header === */
+        /* Vollbild-Header */
         header {
             position: relative;
             width: 100%;
@@ -108,26 +116,23 @@
             animation: zoomIn 30s infinite alternate ease-in-out;
             z-index: 1;
         }
-        /* NEU: ::after Pseudo-Element für den Verlauf */
         header::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 40vh; /* Höhe des Verlaufs */
+            height: 40vh;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-            z-index: 2; /* Liegt über dem Bild (1) */
+            z-index: 2;
         }
         .header-content {
             position: relative;
-            z-index: 3; /* Liegt über dem Verlauf (2) */
+            z-index: 3;
             padding: 30px;
             color: var(--white);
-            /* Der Text ist nicht mehr 100% zentriert, sondern nach unten verschoben */
             margin-top: 50vh; 
         }
-        /* ::before-Element vom Text entfernt */
         
         .header-content h1 {
             font-family: 'Montserrat', sans-serif;
@@ -370,11 +375,10 @@
         .contact-form-container { animation-delay: 0.4s; }
         .contact-info { animation-delay: 0.5s; }
         
-        /* === GEÄNDERT: Kontaktformular-Abstand === */
         .contact-form form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px; /* Abstand vergrößert */
+            gap: 25px;
         }
         .contact-form .full-width {
             grid-column: 1 / -1;
@@ -560,7 +564,6 @@
             .header-content p {
                 font-size: 1.1rem;
             }
-            /* Header-Text wieder zentrieren auf Mobilgeräten */
             .header-content {
                 margin-top: 0;
             }
@@ -606,6 +609,16 @@
             }
         }
     </style>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YFGG4EBG62"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-YFGG4EBG62');
+    </script>
+    
 </head>
 <body>
 
@@ -645,14 +658,13 @@
                     <li><i class="icon fa-solid fa-utensils"></i>Küchenzeile</li>
                     <li><i class="icon fa-solid fa-tv"></i>Fernseher / Radio</li>
                     <li><i class="icon fa-solid fa-couch"></i>Sitzgruppe</li>
-                    <li><i class="icon fa-solid fa-sink"></i>Geschirrspülmaschine</li>
                     <li><i class="icon fa-solid fa-cloud-sun"></i>Überdachter Balkon</li>
                     <li><i class="icon fa-solid fa-bed"></i>Doppelbett, Einzelbett</li>
                     <li><i class="icon fa-solid fa-parking"></i>PKW-Stellplatz</li>
                     <li><i class="icon fa-solid fa-layer-group"></i>69,83 m<sup>2</sup></li>
                     <li><i class="icon fa-solid fa-smoking-ban"></i>Nichtraucher</li>
-                    <li class="negative"><i class="icon fa-solid fa-wifi"></i><b>Kein</b>WLAN</li>
-                    <li class="negative"><i class="icon fa-solid fa-paw"></i><b>Keine</b>Haustiere</li>
+                    <li class="negative"><i class="icon fa-solid fa-wifi"></i><b>Kein</b> WLAN</li>
+                    <li class="negative"><i class="icon fa-solid fa-paw"></i><b>Keine</b> Haustiere</li>
                 </ul>
             </div>
         </section>
@@ -782,15 +794,15 @@
                     <tbody>	
                         <tr>
                             <td>Kinder 7 - 16 Jahre</td>
-                            <td>2,25 €</td>
+                            <td>2,10 €</td>
                         </tr>
                         <tr>
                             <td>ab 17 Jahre</td>
-                            <td>3,50 €</td>
+                            <td>3,20 €</td>
                         </tr>
                     </tbody>
                 </table>
-                <p>Preis für Kurbeiträge inkl. Allgäu Walser Pass nicht im Mietpreis enthalten.</p>
+                <p>Preis für Allgäu Walser Pass im Kurbeitrag enthalten.</p>
             </div>
         </section>
 
