@@ -35,6 +35,7 @@
             color: var(--text-color);
             line-height: 1.7;
             scroll-behavior: smooth;
+            padding-bottom: 100px;
         }
 
         .container {
@@ -121,6 +122,64 @@
             font-size: 1.1rem;
         }
         
+        /* Cookie-Banner Styling */
+        #cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--heading-color);
+            color: var(--white);
+            padding: 20px 40px;
+            box-sizing: border-box;
+            z-index: 1500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-out;
+        }
+        #cookie-consent-banner.hidden {
+            transform: translateY(100%);
+        }
+        .cookie-text {
+            flex-grow: 1;
+            margin-right: 20px;
+            font-size: 0.9rem;
+        }
+        .cookie-text a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .cookie-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+        #cookie-accept-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        #cookie-accept-btn:hover {
+            background-color: var(--primary-color-dark);
+        }
+        #cookie-decline-btn {
+            background-color: #7f8c8d;
+            color: var(--white);
+        }
+        #cookie-decline-btn:hover {
+            background-color: #6c7a7b;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -144,16 +203,41 @@
             .container {
                 padding: 0 20px;
             }
+            /* Cookie-Banner auf Mobilgeräten */
+            #cookie-consent-banner {
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+            }
+            .cookie-text {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .cookie-buttons {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YFGG4EBG62"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-YFGG4EBG62');
+    function loadGoogleAnalytics() {
+        if (document.getElementById('ga-script')) return;
+        var gaScript = document.createElement('script');
+        gaScript.id = 'ga-script';
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-YFGG4EBG62';
+        document.head.appendChild(gaScript);
+        
+        gaScript.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-YFGG4EBG62');
+            console.log('Google Analytics wurde nach Zustimmung geladen.');
+        }
+    }
+    /* KORRIGIERTER BEREICH: Der fehlerhafte </G-YFGG4EBG62> Tag wurde entfernt. */
     </script>
     
 </head>
@@ -182,6 +266,7 @@
             </p>
             <p>
                 Tel.: +49 (0) 83 21 - 78 63 96<br>
+                Fax: +49 (0) 32 12 - 12 13 57 8<br>
                 Mail: ferienwohnung@fn.de
             </p>
             <p>
@@ -265,6 +350,45 @@
             <a href="#impressum">Impressum</a>
         </p>
     </footer>
+
+    <div id="cookie-consent-banner" class="hidden">
+        <div class="cookie-text">
+            Wir verwenden Cookies (insbesondere Google Analytics), um unsere Webseite zu optimieren. Mit Klick auf "Alle Akzeptieren" stimmen Sie dieser Nutzung zu. Mehr Infos finden Sie in unserer <a href="impressum.html#datenschutz">Datenschutzerklärung</a>.
+        </div>
+        <div class="cookie-buttons">
+            <button id="cookie-decline-btn" class="cookie-btn">Nur Notwendige</button>
+            <button id="cookie-accept-btn" class="cookie-btn">Alle Akzeptieren</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const consentBanner = document.getElementById('cookie-consent-banner');
+            const acceptBtn = document.getElementById('cookie-accept-btn');
+            const declineBtn = document.getElementById('cookie-decline-btn');
+            
+            const consent = localStorage.getItem('cookie_consent');
+
+            if (consent === 'granted') {
+                loadGoogleAnalytics();
+            } else if (consent === 'denied') {
+                consentBanner.classList.add('hidden');
+            } else {
+                consentBanner.classList.remove('hidden');
+            }
+
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookie_consent', 'granted');
+                consentBanner.classList.add('hidden');
+                loadGoogleAnalytics();
+            });
+
+            declineBtn.addEventListener('click', () => {
+                localStorage.setItem('cookie_consent', 'denied');
+                consentBanner.classList.add('hidden');
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -10,8 +10,8 @@
     <link rel="canonical" href="https://www.ferienwohnung-am-bächle.de/index.html">
     <meta property="og:title" content="Ferienwohnung am Bächle in Sonthofen">
     <meta property="og:description" content="Gemütliche 69qm Ferienwohnung in Sonthofen mit Bergblick, Süd-Balkon und 2 Schlafzimmern.">
-    <meta property="og:image" content="https://www.ferienwohnung-am-bächle.de/pic01.jpg"> <meta property="og:url" content="https://www.ferienwohnung-am-bächle.de.de/index.html">
-    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.ferienwohnung-am-bächle.de/pic01.jpg">
+    <meta property="og:url" content="https://www.ferienwohnung-am-bächle.de/index.html"> <meta property="og:type" content="website">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,6 +50,8 @@
             color: var(--text-color);
             line-height: 1.7;
             scroll-behavior: smooth;
+            /* NEU: Platz für Cookie-Banner */
+            padding-bottom: 100px;
         }
 
         .container {
@@ -95,7 +97,7 @@
         }
 
 
-        /* Vollbild-Header */
+        /* KORRIGIERT: Vollbild-Header */
         header {
             position: relative;
             width: 100%;
@@ -116,6 +118,7 @@
             animation: zoomIn 30s infinite alternate ease-in-out;
             z-index: 1;
         }
+        /* KORRIGIERT: Verlauf als separates Pseudo-Element */
         header::after {
             content: '';
             position: absolute;
@@ -131,6 +134,7 @@
             z-index: 3;
             padding: 30px;
             color: var(--white);
+            /* KORRIGIERT: Text nach unten verschoben */
             margin-top: 50vh; 
         }
         
@@ -162,6 +166,7 @@
             scroll-margin-top: var(--navbar-height);
         }
 
+        /* Reihenfolge der Animationen */
         #infos { animation-delay: 0.1s; }
         #ausstattung { animation-delay: 0.2s; }
         #raeume { animation-delay: 0.3s; }
@@ -357,7 +362,7 @@
             border-left: 3px solid #eee;
         }
 
-        /* Kontakt-Sektion */
+        /* KORRIGIERT: Kontakt-Sektion */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -378,7 +383,7 @@
         .contact-form form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 25px; /* Abstand korrigiert */
         }
         .contact-form .full-width {
             grid-column: 1 / -1;
@@ -480,7 +485,7 @@
             text-decoration: underline;
         }
         
-        /* Lightbox-Styling */
+        /* KORRIGIERT: Lightbox-Styling (mit Pfeilen & Caption) */
         #lightbox {
             display: none;
             position: fixed;
@@ -552,6 +557,63 @@
             right: 20px;
         }
 
+        /* NEU: Cookie-Banner Styling */
+        #cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--heading-color);
+            color: var(--white);
+            padding: 20px 40px;
+            box-sizing: border-box;
+            z-index: 1500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-out;
+        }
+        #cookie-consent-banner.hidden {
+            transform: translateY(100%);
+        }
+        .cookie-text {
+            flex-grow: 1;
+            margin-right: 20px;
+            font-size: 0.9rem;
+        }
+        .cookie-text a {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .cookie-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+        #cookie-accept-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        #cookie-accept-btn:hover {
+            background-color: var(--primary-color-dark);
+        }
+        #cookie-decline-btn {
+            background-color: #7f8c8d;
+            color: var(--white);
+        }
+        #cookie-decline-btn:hover {
+            background-color: #6c7a7b;
+        }
 
         /* Responsive Anpassungen */
         @media (max-width: 768px) {
@@ -607,16 +669,42 @@
                 font-size: 1rem;
                 bottom: 10px;
             }
+            
+            /* Cookie-Banner auf Mobilgeräten */
+            #cookie-consent-banner {
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+            }
+            .cookie-text {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .cookie-buttons {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YFGG4EBG62"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-YFGG4EBG62');
+    function loadGoogleAnalytics() {
+        if (document.getElementById('ga-script')) return;
+
+        var gaScript = document.createElement('script');
+        gaScript.id = 'ga-script';
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-YFGG4EBG62';
+        document.head.appendChild(gaScript);
+        
+        gaScript.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-YFGG4EBG62');
+            console.log('Google Analytics wurde nach Zustimmung geladen.');
+        }
+    }
     </script>
     
 </head>
@@ -658,6 +746,7 @@
                     <li><i class="icon fa-solid fa-utensils"></i>Küchenzeile</li>
                     <li><i class="icon fa-solid fa-tv"></i>Fernseher / Radio</li>
                     <li><i class="icon fa-solid fa-couch"></i>Sitzgruppe</li>
+                    <li><i class="icon fa-solid fa-sink"></i>Geschirrspülmaschine</li>
                     <li><i class="icon fa-solid fa-cloud-sun"></i>Überdachter Balkon</li>
                     <li><i class="icon fa-solid fa-bed"></i>Doppelbett, Einzelbett</li>
                     <li><i class="icon fa-solid fa-parking"></i>PKW-Stellplatz</li>
@@ -794,15 +883,15 @@
                     <tbody>	
                         <tr>
                             <td>Kinder 7 - 16 Jahre</td>
-                            <td>2,10 €</td>
+                            <td>2,25 €</td>
                         </tr>
                         <tr>
                             <td>ab 17 Jahre</td>
-                            <td>3,20 €</td>
+                            <td>3,50 €</td>
                         </tr>
                     </tbody>
                 </table>
-                <p>Preis für Allgäu Walser Pass im Kurbeitrag enthalten.</p>
+                <p>Preis für Kurbeiträge inkl. Allgäu Walser Pass nicht im Mietpreis enthalten.</p>
             </div>
         </section>
 
@@ -852,7 +941,7 @@
                             <a href="mailto:ferienwohnung@fn.de">ferienwohnung@fn.de</a>
                         </p>
                         <div class="map-container">
-                            <iframe src="http://googleusercontent.com/maps/google.com/13" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2665.485128026772!2d10.292978715647208!3d47.53818807917997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479b0151114c0001%3A0x8670494396ba2819!2sMontfortstra%C3%9Fe%206%2C%2087527%20Sonthofen!5e0!3m2!1sde!2sde!4v1615802364176!5m2!1sde!2sde" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </div>
@@ -876,9 +965,21 @@
         <div id="lightbox-caption"></div>
     </div>
 
+    <div id="cookie-consent-banner" class="hidden">
+        <div class="cookie-text">
+            Wir verwenden Cookies (insbesondere Google Analytics), um unsere Webseite zu optimieren. Mit Klick auf "Alle Akzeptieren" stimmen Sie dieser Nutzung zu. Mehr Infos finden Sie in unserer <a href="impressum.html#datenschutz">Datenschutzerklärung</a>.
+        </div>
+        <div class="cookie-buttons">
+            <button id="cookie-decline-btn" class="cookie-btn">Nur Notwendige</button>
+            <button id="cookie-accept-btn" class="cookie-btn">Alle Akzeptieren</button>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- 1. Lightbox Funktionalität ---
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const lightboxCaption = document.getElementById('lightbox-caption');
@@ -934,7 +1035,7 @@
                 showImage(currentIndex + 1);
             }
 
-            // Event Listeners
+            // Event Listeners (Lightbox)
             lightboxClose.addEventListener('click', closeLightbox);
             prevButton.addEventListener('click', showPrev);
             nextButton.addEventListener('click', showNext);
@@ -955,6 +1056,32 @@
                         showNext();
                     }
                 }
+            });
+
+            // --- 2. Cookie-Consent Funktionalität ---
+            const consentBanner = document.getElementById('cookie-consent-banner');
+            const acceptBtn = document.getElementById('cookie-accept-btn');
+            const declineBtn = document.getElementById('cookie-decline-btn');
+            
+            const consent = localStorage.getItem('cookie_consent');
+
+            if (consent === 'granted') {
+                loadGoogleAnalytics();
+            } else if (consent === 'denied') {
+                consentBanner.classList.add('hidden');
+            } else {
+                consentBanner.classList.remove('hidden');
+            }
+
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookie_consent', 'granted');
+                consentBanner.classList.add('hidden');
+                loadGoogleAnalytics();
+            });
+
+            declineBtn.addEventListener('click', () => {
+                localStorage.setItem('cookie_consent', 'denied');
+                consentBanner.classList.add('hidden');
             });
         });
     </script>
