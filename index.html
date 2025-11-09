@@ -86,7 +86,8 @@
             color: #a0ced9;
         }
 
-        /* Vollbild-Header */
+
+        /* === GEÄNDERT: Vollbild-Header === */
         header {
             position: relative;
             width: 100%;
@@ -107,24 +108,27 @@
             animation: zoomIn 30s infinite alternate ease-in-out;
             z-index: 1;
         }
-        .header-content {
-            position: relative;
-            z-index: 3;
-            padding: 30px;
-            color: var(--white);
-        }
-        /* === GEÄNDERT: Verlauf am unteren Rand === */
-        .header-content::before {
+        /* NEU: ::after Pseudo-Element für den Verlauf */
+        header::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            /* Verlauf ist nur noch in den unteren 40% sichtbar */
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 40%);
-            z-index: -1;
+            height: 40vh; /* Höhe des Verlaufs */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            z-index: 2; /* Liegt über dem Bild (1) */
         }
+        .header-content {
+            position: relative;
+            z-index: 3; /* Liegt über dem Verlauf (2) */
+            padding: 30px;
+            color: var(--white);
+            /* Der Text ist nicht mehr 100% zentriert, sondern nach unten verschoben */
+            margin-top: 50vh; 
+        }
+        /* ::before-Element vom Text entfernt */
+        
         .header-content h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: 3.5rem;
@@ -366,10 +370,11 @@
         .contact-form-container { animation-delay: 0.4s; }
         .contact-info { animation-delay: 0.5s; }
         
+        /* === GEÄNDERT: Kontaktformular-Abstand === */
         .contact-form form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 25px; /* Abstand vergrößert */
         }
         .contact-form .full-width {
             grid-column: 1 / -1;
@@ -471,7 +476,7 @@
             text-decoration: underline;
         }
         
-        /* === GEÄNDERT: Lightbox-Styling (mit Pfeilen & Caption) === */
+        /* Lightbox-Styling */
         #lightbox {
             display: none;
             position: fixed;
@@ -555,6 +560,10 @@
             .header-content p {
                 font-size: 1.1rem;
             }
+            /* Header-Text wieder zentrieren auf Mobilgeräten */
+            .header-content {
+                margin-top: 0;
+            }
             h2 {
                 font-size: 1.8rem;
             }
@@ -579,9 +588,8 @@
                 gap: 50px;
             }
             .contact-form form {
-                grid-template-columns: 1fr; /* Alle Felder untereinander */
+                grid-template-columns: 1fr;
             }
-            /* Lightbox-Anpassungen für Mobilgeräte */
             #lightbox-img {
                 max-width: 90%;
                 max-height: 70%;
@@ -773,11 +781,11 @@
                     <tbody>	
                         <tr>
                             <td>Kinder 7 - 16 Jahre</td>
-                            <td>2,25 €</td>
+                            <td>2,10 €</td>
                         </tr>
                         <tr>
                             <td>ab 17 Jahre</td>
-                            <td>3,50 €</td>
+                            <td>3,20 €</td>
                         </tr>
                     </tbody>
                 </table>
@@ -816,6 +824,8 @@
                     
                     <div class="contact-info">
                         <h3>Hier finden Sie uns</h3>
+                        <p>Die Ferienwohnung am Bächle lieg in einer ruhigen Randlage von Sonthofen direkt am Mühlbach. Es sind in Kürze Wanderwege und die Natur erreichbar. Auch das Stadtzentrum ist nicht weit entfernt. Ein PKW-Stellplatz zur Ferienwohnung ist vorhanden. Sie verfügt über einen großen (7,7 qm) und überdachten Südbalkon mit Bergblick.</p>
+                        
                         <p>
                             <strong>Adresse der Ferienwohnung:</strong><br>
                             Montfortstraße 6, 87527 Sonthofen
@@ -829,7 +839,7 @@
                             <a href="mailto:ferienwohnung@fn.de">ferienwohnung@fn.de</a>
                         </p>
                         <div class="map-container">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d476.3965984902536!2d10.30184643043946!3d47.51121943508116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c8442493b9d89%3A0xc72b8b426bf667a6!2sMontfortstra%C3%9Fe%206%2C%2087527%20Sonthofen!5e0!3m2!1sde!2sde!4v1741809401739!5m2!1sde!2sde" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="http://googleusercontent.com/maps/google.com/13" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </div>
@@ -872,32 +882,27 @@
                 link.addEventListener('click', e => {
                     e.preventDefault();
                     
-                    // Finde die Elterngalerie, um die Bilder zu gruppieren
                     const roomImagesContainer = link.closest('.room-images');
                     currentGallery = Array.from(roomImagesContainer.querySelectorAll('.gallery-image-link'));
-                    
-                    // Finde den Index des angeklickten Bildes
                     currentIndex = currentGallery.indexOf(link);
                     
-                    // Zeige das Bild
                     showImage(currentIndex);
                 });
             });
 
             function showImage(index) {
                 if (index < 0 || index >= currentGallery.length) {
-                    return; // Index außerhalb des Bereichs
+                    return;
                 }
 
                 const link = currentGallery[index];
                 const imgSrc = link.getAttribute('href');
-                const captionText = link.getAttribute('data-caption') || ''; // Nimm Caption aus data-caption
+                const captionText = link.getAttribute('data-caption') || '';
 
                 lightboxImg.setAttribute('src', imgSrc);
                 lightboxCaption.textContent = captionText;
                 currentIndex = index;
 
-                // Zeige/verstecke Pfeile am Anfang/Ende
                 prevButton.style.display = index > 0 ? 'block' : 'none';
                 nextButton.style.display = index < currentGallery.length - 1 ? 'block' : 'none';
                 
@@ -921,14 +926,12 @@
             prevButton.addEventListener('click', showPrev);
             nextButton.addEventListener('click', showNext);
 
-            // Schließen beim Klicken auf den Hintergrund
             lightbox.addEventListener('click', e => {
                 if (e.target === lightbox) {
                     closeLightbox();
                 }
             });
 
-            // Tastaturnavigation
             document.addEventListener('keydown', e => {
                 if (lightbox.classList.contains('active')) {
                     if (e.key === 'Escape') {
