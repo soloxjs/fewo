@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferienwohnung am Bächle in Sonthofen</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-color-dark: #2980b9;
+            --text-color: #343a40;
+            --heading-color: #003440;
+            --light-gray: #f8f9fa;
+            --white: #ffffff;
+            --navbar-height: 70px;
+        }
+
+        /* Keyframes */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        /* Grundlegendes Styling */
+        body {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--navbar-height);
+            background-color: rgba(0, 31, 41, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 40px;
+        }
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #a0ced9;
+        }
+
+        /* Vollbild-Header */
+        header {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .header-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomIn 30s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 3;
+            padding: 30px;
+            color: var(--white);
+        }
+        /* === GEÄNDERT: Verlauf am unteren Rand === */
+        .header-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Verlauf ist nur noch in den unteren 40% sichtbar */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 40%);
+            z-index: -1;
+        }
+        .header-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--white);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .header-content p {
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-top: 10px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Haupt-Inhaltsbereich */
+        main {
+            width: 100%;
+        }
+        section {
+            padding: 40px 0;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        section[id] {
+            scroll-margin-top: var(--navbar-height);
+        }
+
+        #infos { animation-delay: 0.1s; }
+        #ausstattung { animation-delay: 0.2s; }
+        #raeume { animation-delay: 0.3s; }
+        #preise { animation-delay: 0.4s; }
+        #grundriss { animation-delay: 0.5s; }
+        #kontakt { animation-delay: 0.6s; }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 2.2rem;
+            color: var(--heading-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            color: var(--heading-color);
+        }
+
+        .responsive-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        /* Sektion Ausstattung */
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px 30px;
+            list-style: none;
+            padding-left: 0;
+        }
+        .feature-list li {
+            font-size: 1.1rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+        }
+        .feature-list .icon {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+        }
+        .feature-list li.negative .icon {
+            color: #d9534f;
+        }
+        
+        /* Sektion Preise */
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            background-color: var(--white);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .price-table th, .price-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .price-table thead th {
+            background-color: #f1f3f5;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--heading-color);
+        }
+        .price-table tbody tr:last-child th,
+        .price-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .price-table tfoot td {
+            font-size: 0.9rem;
+            color: #555;
+            text-align: right;
+            background-color: #f8f9fa;
+        }
+        .price-table sup {
+            font-size: 0.8rem;
+        }
+        .price-includes {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .price-includes li {
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.1rem;
+        }
+        .price-includes li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Räume-Sektion */
+        .room-feature {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        #raeume .room-feature {
+            opacity: 0;
+            animation: fadeInUp 0.7s ease-out forwards;
+        }
+        #raeume .room-feature:nth-of-type(1) { animation-delay: 0.3s; }
+        #raeume .room-feature:nth-of-type(2) { animation-delay: 0.4s; }
+        #raeume .room-feature:nth-of-type(3) { animation-delay: 0.5s; }
+        #raeume .room-feature:nth-of-type(4) { animation-delay: 0.6s; }
+        #raeume .room-feature:nth-of-type(5) { animation-delay: 0.7s; }
+
+        .room-feature.alt .room-images {
+            grid-column: 2;
+        }
+        .room-feature.alt .room-description {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        .room-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+        }
+        .gallery-image-link {
+            display: block;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gallery-image-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .gallery-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .room-description h3 {
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+        .room-description ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 20px;
+        }
+        .room-description li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .room-description li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .room-description .kitchen-note {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 15px;
+            padding-left: 10px;
+            border-left: 3px solid #eee;
+        }
+
+        /* Kontakt-Sektion */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        
+        .contact-grid > div {
+            opacity: 0;
+            animation: fadeInUp 0.7s ease-out forwards;
+            background-color: transparent;
+            padding: 0;
+            border: none;
+        }
+        .contact-form-container { animation-delay: 0.4s; }
+        .contact-info { animation-delay: 0.5s; }
+        
+        .contact-form form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .contact-form .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Lato', sans-serif;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            grid-column: 1 / -1;
+        }
+        .form-actions input[type="submit"] {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .form-actions input[type="submit"]:hover {
+            background-color: var(--primary-color-dark);
+            transform: scale(1.02);
+        }
+        .form-actions input[type="reset"] {
+            background-color: #f1f3f5;
+            color: var(--text-color);
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        .form-actions input[type="reset"]:hover {
+            background-color: #e9ecef;
+        }
+
+
+        .contact-info p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .contact-info strong {
+            font-weight: 700;
+            color: var(--heading-color);
+        }
+        
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 75%;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #eee;
+        }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: var(--heading-color);
+            color: #adb5bd;
+        }
+        footer a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        /* === GEÄNDERT: Lightbox-Styling (mit Pfeilen & Caption) === */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #lightbox-img {
+            max-width: 85%;
+            max-height: 75%;
+            border-radius: 8px;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+        #lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--white);
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        .lightbox-nav:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #lightbox-prev {
+            left: 20px;
+        }
+        #lightbox-next {
+            right: 20px;
+        }
+
+
+        /* Responsive Anpassungen */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            .header-content p {
+                font-size: 1.1rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            nav ul {
+                gap: 20px;
+            }
+            nav a {
+                font-size: 1rem;
+            }
+            .room-feature,
+            .room-feature.alt {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .room-feature.alt .room-images,
+            .room-feature.alt .room-description {
+                grid-column: 1;
+                grid-row: auto;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .contact-form form {
+                grid-template-columns: 1fr; /* Alle Felder untereinander */
+            }
+            /* Lightbox-Anpassungen für Mobilgeräte */
+            #lightbox-img {
+                max-width: 90%;
+                max-height: 70%;
+            }
+            .lightbox-nav {
+                font-size: 2rem;
+                padding: 10px;
+            }
+            #lightbox-prev { left: 5px; }
+            #lightbox-next { right: 5px; }
+            #lightbox-caption {
+                font-size: 1rem;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#start">Start</a></li>
+            <li><a href="#infos">Infos</a></li>
+            <li><a href="#preise">Preise</a></li>
+            <li><a href="#raeume">Räume</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <header id="start">
+        <img src="pic01.jpg" alt="Winterlandschaft mit Blick auf die Berge und Schnee" class="header-image">
+        <div class="header-content">
+            <h1>Ferienwohnung am Bächle in Sonthofen</h1>
+            <p>Die Ferienwohnung am Bächle liegt in einer ruhigen Randlage von Sonthofen direkt am Mühlbach. Es sind in Kürze Wanderwege und die Natur erreichbar. Auch das Stadtzentrum ist nicht weit entfernt. Ein PKW-Stellplatz zur Ferienwohnung ist vorhanden.</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="infos">
+            <div class="container">
+                <h2>Informationen</h2>
+                <p style="font-size: 1.1rem;">
+                    <strong>Einfamilienhaus</strong> mit gemütlich eingerichteter, renovierter Ferienwohnung im 1. Obergeschoss mit <strong>Bergblick</strong> (69,83 qm). Die <strong>Stadtrandlage</strong> ist ideal für <strong>Aktivitäten</strong> in der freien <strong>Natur</strong> (Wanderwege, Radwege, Langlaufloipen).
+                    Ferienwohnung mit <strong>Wohn-, Essbereich und Küchenzeile</strong> (mit Spülmaschine). Bad mit <strong>Dusche und WC</strong>, <strong>Schlafzimmer</strong> mit <strong>Doppelbett</strong> und <strong>Kinderzimmer</strong> mit <strong>Einzelbett</strong>. Überdachter <strong>Süd-Balkon</strong> sowie <strong>PKW-Stellplatz</strong> zur alleinigen Nutzung durch Gäste.
+                </p>
+            </div>
+        </section>
+        
+        <section id="ausstattung">
+            <div class="container">
+                <h2>Ausstattung</h2>
+                <ul class="feature-list">
+                    <li><i class="icon fa-solid fa-utensils"></i>Küchenzeile</li>
+                    <li><i class="icon fa-solid fa-tv"></i>Fernseher / Radio</li>
+                    <li><i class="icon fa-solid fa-couch"></i>Sitzgruppe</li>
+                    <li><i class="icon fa-solid fa-cloud-sun"></i>Überdachter Balkon</li>
+                    <li><i class="icon fa-solid fa-bed"></i>Doppelbett, Einzelbett</li>
+                    <li><i class="icon fa-solid fa-parking"></i>PKW-Stellplatz</li>
+                    <li><i class="icon fa-solid fa-layer-group"></i>69,83 m<sup>2</sup></li>
+                    <li><i class="icon fa-solid fa-smoking-ban"></i>Nichtraucher</li>
+                    <li class="negative"><i class="icon fa-solid fa-wifi"></i><b>Kein</b> WLAN</li>
+                    <li class="negative"><i class="icon fa-solid fa-paw"></i><b>Keine</b> Haustiere</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="raeume">
+            <div class="container">
+                <h2>Unsere Räume</h2>
+
+                <div class="room-feature">
+                    <div class="room-images">
+                        <a href="08.jpg" class="gallery-image-link" data-caption="Wohnzimmer Sofa"><img src="08.jpg" alt="Wohnzimmer Sofa" class="gallery-image"></a>
+                        <a href="11.jpg" class="gallery-image-link" data-caption="Wohnzimmer TV-Bereich"><img src="11.jpg" alt="Wohnzimmer TV-Bereich" class="gallery-image"></a>
+                        <a href="12.jpg" class="gallery-image-link" data-caption="Wohnzimmer Essecke"><img src="12.jpg" alt="Wohnzimmer Essecke" class="gallery-image"></a>
+                        <a href="13.jpg" class="gallery-image-link" data-caption="Wohnzimmer Essecke Detail"><img src="13.jpg" alt="Wohnzimmer Essecke Detail" class="gallery-image"></a>
+                        <a href="15.jpg" class="gallery-image-link" data-caption="Küche"><img src="15.jpg" alt="Küche" class="gallery-image"></a>
+                        <a href="16.jpg" class="gallery-image-link" data-caption="Küche Detail"><img src="16.jpg" alt="Küche Detail" class="gallery-image"></a>
+                    </div>
+                    <div class="room-description">
+                        <h3>Wohn- & Essbereich mit Küche</h3>
+                        <p>Der helle und offene Wohnbereich (ca. 34,9 m²) ist der Mittelpunkt der Wohnung. Er kombiniert eine gemütliche Sofaecke, einen Essbereich und eine voll ausgestattete Küche.</p>
+                        <p class="kitchen-note">Küchenzeile inklusive Kühlschrank mit Gefrierfach, Backofen, Dunstabzug und Geschirrspülmaschine.</p>
+                    </div>
+                </div>
+
+                <div class="room-feature alt">
+                    <div class="room-images">
+                        <a href="14.jpg" class="gallery-image-link" data-caption="Balkon mit Sitzgelegenheit"><img src="14.jpg" alt="Balkon mit Sitzgelegenheit" class="gallery-image"></a>
+                        <a href="01.jpg" class="gallery-image-link" data-caption="Blick vom Balkon im Sommer"><img src="01.jpg" alt="Blick vom Balkon im Sommer" class="gallery-image"></a>
+                        <a href="01-2.jpg" class="gallery-image-link" data-caption="Blick vom Balkon im Winter"><img src="01-2.jpg" alt="Blick vom Balkon im Winter" class="gallery-image"></a>
+                    </div>
+                    <div class="room-description">
+                        <h3>Südbalkon mit Bergblick</h3>
+                        <p>Auf unserem überdachten Süd-Balkon (ca. 7,7 qm) können sie die Aussicht auf die wunderschönen Allgäuer Berge genießen.</p>
+                    </div>
+                </div>
+
+                <div class="room-feature">
+                    <div class="room-images">
+                        <a href="09.jpg" class="gallery-image-link" data-caption="Schlafzimmer mit Doppelbett"><img src="09.jpg" alt="Schlafzimmer mit Doppelbett" class="gallery-image"></a>
+                        <a href="10.jpg" class="gallery-image-link" data-caption="Schlafzimmer Doppelbett Ansicht"><img src="10.jpg" alt="Schlafzimmer Doppelbett Ansicht" class="gallery-image"></a>
+                    </div>
+                    <div class="room-description">
+                        <h3>Schlafzimmer (Doppelbett)</h3>
+                        <p>Das Hauptschlafzimmer (ca. 9,8 m²) mit Doppelbett bietet Ruhe und einen schönen Blick.</p>
+                        <ul>
+                            <li>Doppelbett (180x200cm)</li>
+                            <li>Geräumiger Schrank</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="room-feature alt">
+                    <div class="room-images">
+                        <a href="06.jpg" class="gallery-image-link" data-caption="Schlafzimmer Kind, Einzelbett"><img src="06.jpg" alt="Schlafzimmer Kind, Einzelbett" class="gallery-image"></a>
+                        <a href="07.jpg" class="gallery-image-link" data-caption="Schlafzimmer Kind, Ansicht zur Tür"><img src="07.jpg" alt="Schlafzimmer Kind, Ansicht zur Tür" class="gallery-image"></a>
+                    </div>
+                    <div class="room-description">
+                        <h3>Schlafzimmer (Kind)</h3>
+                        <p>Ein gemütliches und helles Zimmer (ca. 10,6 m²). Perfekt für Kinder oder als zusätzliches Einzelzimmer.</p>
+                        <ul>
+                            <li>Einzelbett (90x200cm)</li>
+                            <li>Kleiderschrank</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="room-feature">
+                    <div class="room-images">
+                        <a href="02.jpg" class="gallery-image-link" data-caption="Badezimmer Waschbecken"><img src="02.jpg" alt="Badezimmer Waschbecken" class="gallery-image"></a>
+                        <a href="03.jpg" class="gallery-image-link" data-caption="Bodengleiche Regendusche"><img src="03.jpg" alt="Bodengleiche Regendusche" class="gallery-image"></a>
+                        <a href="04.jpg" class="gallery-image-link" data-caption="Dusche mit Handtuchheizkörper"><img src="04.jpg" alt="Dusche mit Handtuchheizkörper" class="gallery-image"></a>
+                        <a href="05.jpg" class="gallery-image-link" data-caption="Badezimmer mit WC"><img src="05.jpg" alt="Badezimmer mit WC" class="gallery-image"></a>
+                    </div>
+                    <div class="room-description">
+                        <h3>Modernes Badezimmer</h3>
+                        <p>In unserem modernen Bad (ca. 5,5 m²) stehen Ihnen eine neu renovierte Dusche, Toilette sowie Waschbecken mit Spiegel inklusive Handtüchern, Seife und Föhn zur Verfügung.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="preise">
+            <div class="container">
+                <h2>Preise</h2>
+                
+                <h4>Wohnung</h4>
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>Beschreibung</th>
+                            <th>Preis</th>
+                        </tr>
+                    </thead>
+                    <tbody>	
+                        <tr>
+                            <td>2 Personen</td>
+                            <td>85€ / Nacht <sup>*</sup></td>
+                        </tr>
+                        <tr>
+                            <td>Endreinigung</td>
+                            <td>65€ einmalig</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><sup>*</sup> zzgl. Kurbeiträge / Nacht</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3>Im Preis inklusive:</h3>
+                <ul class="price-includes">
+                    <li>Bettwäsche</li>
+                    <li>Hand - und Geschirrtücher</li>
+                    <li>Föhn</li>
+                </ul>
+
+                <h4 style="margin-top: 30px;">Kurbeiträge</h4>
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>Beschreibung</th>
+                            <th>Preis / Nacht</th>
+                        </tr>
+                    </thead>
+                    <tbody>	
+                        <tr>
+                            <td>Kinder 7 - 16 Jahre</td>
+                            <td>2,25 €</td>
+                        </tr>
+                        <tr>
+                            <td>ab 17 Jahre</td>
+                            <td>3,50 €</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Preis für Allgäu Walser Pass im Kurbeitrag enthalten.</p>
+            </div>
+        </section>
+
+        <section id="grundriss">
+            <div class="container">
+                <h2>Grundriss der Wohnung</h2>
+                <img src="pic02.jpg" alt="Grundriss der Ferienwohnung" class="responsive-img">
+            </div>
+        </section>
+
+        <section id="kontakt">
+            <div class="container">
+                <h2>Kontakt & Anfahrt</h2>
+                <div class="contact-grid">
+                    
+                    <div class="contact-form-container">
+                        <h3>Schreiben Sie uns!</h3>
+                        <p>Kontaktieren Sie uns gerne per Email, Telefon oder dem untenstehenden Kontaktformular.</p>
+                        
+                        <form class="contact-form" action="mailto:ferienwohnung@fn.de" method="post" enctype="text/plain">
+                            <input type="text" name="vname" id="vname" placeholder="Vorname" />
+                            <input type="text" name="nname" id="nname" placeholder="Nachname" />
+                            <input type="email" name="email" id="email" placeholder="Email Adresse" />
+                            <input type="tel" name="tel" id="tel" placeholder="Telefonnummer" />
+                            <textarea name="message" id="message" placeholder="Nachricht" rows="4" class="full-width"></textarea>
+                            <div class="form-actions full-width">
+                                <input type="submit" value="Nachricht senden" />
+                                <input type="reset" value="Zurücksetzen" />
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h3>Hier finden Sie uns</h3>
+                        <p>
+                            <strong>Adresse der Ferienwohnung:</strong><br>
+                            Montfortstraße 6, 87527 Sonthofen
+                        </p>
+                        <p>
+                            <strong>Telefon:</strong><br>
+                            08321 - 786396
+                        </p>
+                         <p>
+                            <strong>Email:</strong><br>
+                            <a href="mailto:ferienwohnung@fn.de">ferienwohnung@fn.de</a>
+                        </p>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d476.3965984902536!2d10.30184643043946!3d47.51121943508116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479c8442493b9d89%3A0xc72b8b426bf667a6!2sMontfortstra%C3%9Fe%206%2C%2087527%20Sonthofen!5e0!3m2!1sde!2sde!4v1741809401739!5m2!1sde!2sde" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <p>
+            © Ferienwohnung am Bächle. | 
+            <a href="impressum.html#impressum">Impressum</a>
+        </p>
+    </footer>
+
+    <div id="lightbox">
+        <span id="lightbox-close">×</span>
+        <span class="lightbox-nav" id="lightbox-prev">❮</span>
+        <span class="lightbox-nav" id="lightbox-next">❯</span>
+        <img id="lightbox-img" src="">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const prevButton = document.getElementById('lightbox-prev');
+            const nextButton = document.getElementById('lightbox-next');
+            
+            let currentGallery = [];
+            let currentIndex = 0;
+
+            const galleryLinks = document.querySelectorAll('.gallery-image-link');
+
+            galleryLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    
+                    // Finde die Elterngalerie, um die Bilder zu gruppieren
+                    const roomImagesContainer = link.closest('.room-images');
+                    currentGallery = Array.from(roomImagesContainer.querySelectorAll('.gallery-image-link'));
+                    
+                    // Finde den Index des angeklickten Bildes
+                    currentIndex = currentGallery.indexOf(link);
+                    
+                    // Zeige das Bild
+                    showImage(currentIndex);
+                });
+            });
+
+            function showImage(index) {
+                if (index < 0 || index >= currentGallery.length) {
+                    return; // Index außerhalb des Bereichs
+                }
+
+                const link = currentGallery[index];
+                const imgSrc = link.getAttribute('href');
+                const captionText = link.getAttribute('data-caption') || ''; // Nimm Caption aus data-caption
+
+                lightboxImg.setAttribute('src', imgSrc);
+                lightboxCaption.textContent = captionText;
+                currentIndex = index;
+
+                // Zeige/verstecke Pfeile am Anfang/Ende
+                prevButton.style.display = index > 0 ? 'block' : 'none';
+                nextButton.style.display = index < currentGallery.length - 1 ? 'block' : 'none';
+                
+                lightbox.classList.add('active');
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+            }
+
+            function showPrev() {
+                showImage(currentIndex - 1);
+            }
+
+            function showNext() {
+                showImage(currentIndex + 1);
+            }
+
+            // Event Listeners
+            lightboxClose.addEventListener('click', closeLightbox);
+            prevButton.addEventListener('click', showPrev);
+            nextButton.addEventListener('click', showNext);
+
+            // Schließen beim Klicken auf den Hintergrund
+            lightbox.addEventListener('click', e => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Tastaturnavigation
+            document.addEventListener('keydown', e => {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowLeft') {
+                        showPrev();
+                    } else if (e.key === 'ArrowRight') {
+                        showNext();
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
